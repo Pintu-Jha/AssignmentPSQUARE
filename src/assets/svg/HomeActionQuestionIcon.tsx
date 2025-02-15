@@ -1,0 +1,44 @@
+import * as React from "react"
+import Svg, {
+  SvgProps,
+  Path,
+  Defs,
+  Pattern,
+  Use,
+  Image,
+} from "react-native-svg"
+
+
+    
+interface CustomIconProps {
+    size: number;
+    // color: string;
+  }
+
+
+const HomeActionQuestionIcon:React.FC<CustomIconProps> = ({size}) => (
+  <Svg
+    width={size}
+    height={size}
+    fill="none"
+  >
+    <Path fill="url(#a)" d="M0 0h34v34H0z" />
+    <Defs>
+      <Pattern
+        id="a"
+        width={1}
+        height={1}
+        patternContentUnits="objectBoundingBox"
+      >
+        <Use xlinkHref="#b" transform="scale(.01563)" />
+      </Pattern>
+      <Image
+        xlinkHref="data:image/png;base64,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"
+        id="b"
+        width={64}
+        height={64}
+      />
+    </Defs>
+  </Svg>
+)
+export default HomeActionQuestionIcon
