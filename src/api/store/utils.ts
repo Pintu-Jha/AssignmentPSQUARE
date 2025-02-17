@@ -3,6 +3,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { STORAGE_KEYS } from '../slices/authSlice';
 
 const BASE_URL = process.env.API_URL || 'http://192.168.0.106:3000'; 
+console.log(BASE_URL);
+
 
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,

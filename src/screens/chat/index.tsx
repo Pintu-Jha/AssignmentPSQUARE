@@ -44,30 +44,30 @@ const Chat = () => {
 
   const handleFileUpload = async () => {
     try {
-      const pickedFiles = await pickDocument();
+      // Pick single file
+      const pickedFiles = await pickDocument({ multiple: false });
       
-      if (!pickedFiles || pickedFiles.length === 0) {
+      if (!pickedFiles) {
         return; // User cancelled or error occurred
       }
   
-      setSelectedFiles(pickedFiles);
-  
+      const file = pickedFiles[0];
       const formData = new FormData();
       
-      // If uploading a single file
       formData.append('file', {
-        uri: pickedFiles[0].uri,
-        type: pickedFiles[0].type || 'application/octet-stream',
-        name: pickedFiles[0].name || `file.${pickedFiles[0].type?.split('/')[1] || 'unknown'}`,
+        uri: file.uri,
+        type: file.type,
+        name: file.name
       });
   
       const response = await uploadFile(formData).unwrap();
       Alert.alert('Success', 'File uploaded successfully');
     } catch (error) {
-      Alert.alert(
-        'Upload Failed',
-        'There was an error uploading your file. Please try again.'
-      );
+      if (error && typeof error === 'object' && 'message' in error) {
+        Alert.alert('Error', error.message as string);
+      } else {
+        Alert.alert('Upload Failed', 'There was an error uploading your file. Please try again.');
+      }
       console.error('Upload error:', error);
     }
   };
